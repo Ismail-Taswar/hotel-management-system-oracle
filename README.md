@@ -41,8 +41,8 @@ image/            UI assets (backgrounds, logos, employee photos)
 ## How to Run
 
 1. Create a schema in Oracle DB and run
-   `Documents/table_script_hotel_management_system.txt`
-   (plus the common script and `Room status Procedure.txt`).
+   `Documents/table_script_hotel_management_system.sql`
+   (plus the common script and `Room status Procedure.sql`).
 2. Open `.fmb` files in Oracle Forms Builder, connect to the schema, compile,
    and run through the Forms runtime.
 3. Restore sample data with a dump from `Databackup/` (IMPDP).
