@@ -1,0 +1,53 @@
+select guest_id,first_name||' '||last_name guest_name,cell_number,Gender,nid_number 
+from   guest 
+order  by guest_id
+
+
+
+BEGIN
+htp.p('<style>
+table
+{
+ border: 2px solid red;
+ border-collapse: collapse;
+}
+th
+{
+ border: 1px solid blue;
+ background-color:yellow;
+ font-size: 14px;
+  padding: 3px;
+}
+td
+{
+ border: 1px solid black;
+ text-align: center;
+ padding: 1px 3px;
+}
+</style>');
+----------------- Column Heading -----------------
+htp.p('<center> <table style="width:80%">
+ <tr>
+  <th style="width: 100px">Guest ID</th>
+  <th>Guest Name</th>
+  <th style="width: 160px">Cell Number</th>
+  <th style="width: 150px">Gender</th>
+  <th style="width: 150px">Nid Number</th>
+ </tr>');
+------------ Type your Query ------------------------------------------
+FOR nur in (select Guest_id,first_name||' '||last_name Guest_name,Cell_Number,Gender,Nid_Number 
+            from   guest 
+             order  by guest_id)
+----------------------------------------------------------------------
+----------------- Column Data -----------------
+LOOP
+ htp.p('<tr>
+   <td style="text-align: center">'||htf.escape_sc(nur.Guest_id)||'</td>
+   <td style="text-align: Left">'||htf.escape_sc(nur.Guest_name)||'</td>
+   <td style="text-align: right">'||htf.escape_sc(nur.Cell_Number)||'</td>
+   <td style="text-align: center">'||htf.escape_sc(nur.Gender)||'</td>
+   <td style="text-align: center">'||htf.escape_sc(nur.Nid_Number)||'</td>
+   <tr>');
+END LOOP;
+htp.p(' </table></center>') ;
+END ;

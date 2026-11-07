@@ -1,0 +1,29 @@
+Go to Interactive grid teport Booking D Region :
+
+#Create dynamic action on Room_rent 
+
+
+When :
+     event : change 
+
+True action >
+
+
+Identification :
+
+      Action : Execute server-side-code
+
+Setting :
+     language : PLSQL
+     PL/SQL Code : 
+
+  :TOTAL_RENT := NVL(:P11_TOTAL_BOOKED_DAYS, 0) * NVL(:ROOM_RENT,0) ;
+
+ Items to Submit : 
+
+        ROOM_RENT,P11_TOTAL_BOOKED_DAYS  
+ Column theke room_rent and current page theke  P11_TOTAL_BOOKED_DAYS  select korte hobe
+
+ Items to Return : TOTAL_RENT
+
+=====ENd===========

@@ -1,0 +1,20 @@
+select "EXPENSE_M_ID",
+    null LINK_CLASS,
+    apex_page.get_url(p_items => 'P32_EXPENSE_M_ID', p_values => "EXPENSE_M_ID") LINK,
+    null ICON_CLASS,
+    null LINK_ATTR,
+    null ICON_COLOR_CLASS,
+    case when coalesce(:P20_EXPENSE_M_ID,'0') = "EXPENSE_M_ID"
+      then 'is-active' 
+      else ' '
+    end LIST_CLASS,
+    (substr(to_char("EXPENSE_DATE", 'DD-Mon-RRRR'), 1, 50)||( case when length(to_char("EXPENSE_DATE", 'DD-Mon-RRRR')) > 50 then '...' else '' end )) LIST_TITLE,
+      (substr("BRANCH_NAME", 1, 50)||( case when length("BRANCH_NAME") > 50 then '...' else '' end )) LIST_TEXT,
+    null LIST_BADGE
+from "EXPENSE_M" x,"BRANCH" f
+where (:P20_SEARCH is null
+        or upper(x."EXPENSE_DATE") like '%'||upper(:P20_SEARCH)||'%'
+        or upper(f."BRANCH_NAME") like '%'||upper(:P20_SEARCH)||'%'
+    )
+    and x.BRANCH_ID = f.BRANCH_ID(+)
+order by "EXPENSE_DATE"

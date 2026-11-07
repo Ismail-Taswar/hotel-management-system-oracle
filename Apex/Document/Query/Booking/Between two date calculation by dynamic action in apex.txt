@@ -1,0 +1,32 @@
+
+Between two date calculation by dynamic action in apex :
+=============================================================
+
+Step 1:
+=========
+Go to CHECK_IN_DATE ITEM 
+  Format Mask : dewa jabe na 
+
+Go to CHECK_OUT_DATE ITEM 
+  Format Mask : dewa jabe na 
+
+Step 2:
+============
+
+Go to CHECK_OUT_DATE ITEM 
+
+#Create dynamic action 
+  When: Change
+
+  True:
+       Action: Execute Server-side Code
+ Setting: 
+        Language: PL/SQL
+ 
+PL/SQL Code:
+     :P11_TOTAL_BOOKED_DAYS:=(TO_DATE(:P11_CHECK_OUT_DATE,'MM/DD/YYYY')-TO_DATE(:P11_CHECK_IN_DATE,'MM/DD/YYYY'));
+
+Items to Submit : P11_CHECK_IN_DATE,P11_CHECK_OUT_DATE
+Items to Return : P11_TOTAL_BOOKED_DAYS
+
+  

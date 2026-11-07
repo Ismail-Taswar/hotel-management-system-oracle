@@ -1,0 +1,51 @@
+select USER_INFO_ID,USER_TYPE_ID,USERNAME
+from   USER_INFO
+order by USERNAME desc
+
+
+BEGIN
+htp.p('<style>
+table
+{
+ border: 2px solid red;
+ border-collapse: collapse;
+}
+th
+{
+ border: 1px solid blue;
+ background-color:yellow;
+ font-size: 14px;
+  padding: 3px;
+}
+td
+{
+ border: 1px solid black;
+ text-align: center;
+ padding: 1px 3px;
+}
+</style>');
+----------------- Column Heading -----------------
+htp.p('<center> <table style="width:80%">
+ <tr>
+  <th style="width: 100px">USER ID</th>
+  <th>USER Type Name</th>
+  <th style="width: 160px">USERNAME</th>
+  <th style="width: 150px">Added by</th>
+ </tr>');
+------------ Type your Query ------------------------------------------
+FOR Em in (select USER_INFO_ID,USER_TYPE_name,USERNAME,action_user
+            from   USER_INFO ui, USER_TYPE ut
+            where  ui.USER_TYPE_ID = ut.USER_TYPE_ID
+            order by USERNAME desc)
+----------------------------------------------------------------------
+----------------- Column Data -----------------
+LOOP
+ htp.p('<tr>
+   <td style="text-align: center">'||htf.escape_sc(Em.USER_INFO_ID)||'</td>
+   <td style="text-align: Left">'||htf.escape_sc(Em.USER_TYPE_name)||'</td>
+   <td style="text-align: right">'||htf.escape_sc(Em.USERNAME)||'</td>
+   <td style="text-align: center">'||htf.escape_sc(Em.action_user)||'</td>
+   <tr>');
+END LOOP;
+htp.p(' </table></center>') ;
+END ;

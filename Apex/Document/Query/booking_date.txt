@@ -1,0 +1,31 @@
+select bm.BOOKING_M_DATE, bm.guest_ID,g.first_name||''|| last_name guest_name,bm.CHECK_IN_date, bm.CHECK_OUT_date,
+       bd.ROOM_ID , rs.STATUS
+from  booking_m bm, booking_d bd, room r, guest g,room_status rs
+where bm.BOOKING_m_ID = bd.BOOKING_m_ID
+and   bm.guest_ID = g.guest_ID
+and   bd.ROOM_ID = r.ROOM_ID
+and   r.ROOM_ID = rs.ROOM_ID
+and  bd.ROOM_ID=:P49_ROOM_ID
+
+
+
+
+select BOOKING_M_DATE, guest_ID,guest_name,CHECK_IN_date, CHECK_OUT_date,
+       ROOM_ID , STATUS ,ROOM_NUMBER
+from  booking_room_view
+where and  bd.ROOM_ID=:P31_ROOM_NUMBER
+
+
+create or replace view booking_room_view
+as
+select bm.BOOKING_M_DATE, bm.guest_ID,g.first_name||''|| last_name guest_name,bm.CHECK_IN_date, bm.CHECK_OUT_date,
+       bd.ROOM_ID ,r.ROOM_NUMBER, rs.STATUS
+from  booking_m bm, booking_d bd, room r, guest g,room_status rs
+where bm.BOOKING_m_ID = bd.BOOKING_m_ID
+and   bm.guest_ID = g.guest_ID
+and   bd.ROOM_ID = r.ROOM_ID
+and   r.ROOM_ID = rs.ROOM_ID
+
+
+ select ROOM_ID,ROOM_NUMBER
+ from   booking_room_view

@@ -1,0 +1,151 @@
+Home Page >>>>>
+
+
+Current Mont's Income
+=========================================
+create region >
+
+
+Current Mont's Income :
+
+
+Identification>
+
+Type: SQL QUERY
+
+select   nvl(sum(pay), 0) Total_income
+from     bill 
+where    to_char(bill_date, 'MM') = to_char(sysdate, 'MM')  
+
+Template > Standared
+
+
+
+Attribute : 
+
+  Appearance>
+
+Template Type : Theme
+Template: Badget List
+Template Options: as wish design
+
+=================================================
+Current Months Expense( uporer tar moto same process a korte hobe )
+
+
+SQL Query :
+
+select   nvl(sum(EXPENSE_AMOUNT), 0)
+from     EXPENSE_M em, EXPENSE_D ed
+where    em.EXPENSE_M_ID = ed.EXPENSE_M_ID
+and      to_char(EXPENSE_DATE, 'MM') = to_char(sysdate, 'MM')  ; 
+
+
+
+================================================================
+
+Current Months Profit/Loss
+
+SQL Query :
+
+
+ select     case when  ( select   nvl(sum(pay), 0) 
+            from     bill 
+            where    to_char(bill_date, 'MM') = to_char(sysdate, 'MM') ) < (select   nvl(sum(EXPENSE_AMOUNT), 0)
+            from     EXPENSE_M em, EXPENSE_D ed
+            where    em.EXPENSE_M_ID = ed.EXPENSE_M_ID
+            and      to_char(EXPENSE_DATE, 'MM') = to_char(sysdate, 'MM') ) then
+            'Loss- '||((select   nvl(sum(EXPENSE_AMOUNT), 0)
+            from     EXPENSE_M em, EXPENSE_D ed
+            where    em.EXPENSE_M_ID = ed.EXPENSE_M_ID
+            and      to_char(EXPENSE_DATE, 'MM') = to_char(sysdate, 'MM') ) -  ( select   nvl(sum(pay), 0) Total_income
+             from     bill 
+             where    to_char(bill_date, 'MM') = to_char(sysdate, 'MM') ))
+            when     ( select   nvl(sum(pay), 0) 
+             from     bill 
+             where    to_char(bill_date, 'MM') = to_char(sysdate, 'MM') ) > (select   nvl(sum(EXPENSE_AMOUNT), 0)
+            from     EXPENSE_M em, EXPENSE_D ed
+            where    em.EXPENSE_M_ID = ed.EXPENSE_M_ID
+            and      to_char(EXPENSE_DATE, 'MM') = to_char(sysdate, 'MM') ) then
+            'Profit- '|| (( select   nvl(sum(pay), 0) 
+             from     bill 
+             where    to_char(bill_date, 'MM') = to_char(sysdate, 'MM') ) - (select   nvl(sum(EXPENSE_AMOUNT), 0)
+            from     EXPENSE_M em, EXPENSE_D ed
+            where    em.EXPENSE_M_ID = ed.EXPENSE_M_ID
+            and      to_char(EXPENSE_DATE, 'MM') = to_char(sysdate, 'MM') ))
+            else 'No profit'
+            end as loss_Profit
+ from    dual ; 
+
+
+
+======================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,48 @@
+
+
+
+Calculation on Advanced Paid for Due Ampunt :
+=================================================
+
+
+Create dynamic action on P57_ADVANCED_PAID
+
+
+When: Change
+--------------------
+ True:
+     Action: Execute Server-side Code
+ Settings: 
+ Language: PL/SQL
+ 
+PL/SQL Code:
+
+begin
+	:P57_DUE:=(nvl(:P57_GRANT_TOTAL,0)-nvl(:P57_ADVANCED_PAID,0));
+	if :P57_GRANT_TOTAL = :P57_ADVANCED_PAID or :P57_GRANT_TOTAL < :P57_ADVANCED_PAID then
+		:P57_PAYMENT_STATUS:='Paid';
+	else
+			:P57_PAYMENT_STATUS:='Due';
+	end if;	   
+end;
+
+
+
+Items to Submit :  P57_GRANT_TOTAL,P57_ADVANCED_PAID
+Items to Return :  P57_DUE,P57_PAYMENT_STATUS
+
+
+=======EnD================
+
+if (apex.item('P57_DUE').getValue() > 0)
+{
+apex.item('P57_PAYMENT_STATUS').setValue('Due');
+$('#P57_PAYMENT_STATUS').css('background-color', 'DarkOrange'); // Change background color to
+red
+}
+else
+{
+apex.item('P57_PAYMENT_STATUS').setValue('Paid');
+$('P57_PAYMENT_STATUS').css('background-color', 'Aquamarine'); // Change background color to
+green
+}

@@ -1,0 +1,10 @@
+create or replace TRIGGER Food_d_id_PK_TRIG
+before
+insert on Food_d
+for each row
+begin
+select nvl(max(to_number(Food_d_id)), 0) + 1
+into :new.Food_d_id
+from Food_d ;
+end;
+/

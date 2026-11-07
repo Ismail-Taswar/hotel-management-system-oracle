@@ -1,0 +1,23 @@
+conn hm_ddd56/123@orcl19c
+
+
+conn sys as sysdba
+
+select name from v$database ;
+
+drop user hm_ddd56 cascade ;
+
+grant dba to hm_ddd56 identified by 123 ;
+
+hm_ddd56/123@dbddd56
+
+go to imp.exe
+
+C:\app\Administrator\product\12.2.0\dbhome_1\bin\imp.exe    open run as administrator
+
+ems_ddd52/123@orcl
+
+D:\Project_DDD_DTCM_56_M\Databackup\hotel_Manegment_Backup_Data.dmp
+
+Import entire export file (yes/no): no > y
+

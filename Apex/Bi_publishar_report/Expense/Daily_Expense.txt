@@ -1,0 +1,13 @@
+select  ed.EXPENSE_M_ID,EXPENSE_TYPE_NAME,EXPENSE_AMOUNT,BRANCH_NAME,EXPENSE_DATE,Expense_by
+from    expense_m em,EXPENSE_D ed,EXPENSE_TYPE et,BRANCH b
+where   ed.EXPENSE_M_ID = em.EXPENSE_M_ID
+and     ed.EXPENSE_TYPE_id = et.EXPENSE_TYPE_id
+and     em.BRANCH_ID = b.BRANCH_ID
+
+url:f?p=&APP_ID.:0:&SESSION.:PRINT_REPORT=Daily_Expense
+
+
+http://imran:8080/ords/f?p=&APP_ID.:0:&SESSION.:PRINT_REPORT=Daily_Expense
+
+
+https://apex.oracle.com/pls/apex/f?p=&APP_ID.:0:&SESSION.:PRINT_REPORT=Daily_Expense

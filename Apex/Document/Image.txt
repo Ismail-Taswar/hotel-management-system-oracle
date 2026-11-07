@@ -1,0 +1,271 @@
+Show Image on Report:
+1.
+Report Page Property: css\inline\
+img
+{
+width:80px ;
+height:80px ;
+}
+
+2. 
+Image Item Property te Display Image kore dite hobe 
+Layout Group er Column Alignment Center kore dite hobe
+Layout Group:
+--------------------
+ Column Alignment: Center
+ --------------------------
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+
+Image User Report Query
+For User_Info table Report Query:
+select "USER_INFO_ID","USER_TYPE_ID","USER_STATUS_ID","EMPLOYEE_ID",
+ "BRANCH_ID","USERNAME","PASSWORD",
+ sys.dbms_lob.getlength("USER_IMAGE")"USER_IMAGE",
+ "ACTION_USER", "ACTION_DATE_TIME"
+from "USER_INFO"
+sys.dbms_lob.getlength("USER_IMAGE")"USER_IMAGE"
+
+For Employee table Report Query:
+select "ROWID","EMPLOYEE_ID","DESIGNATION_ID","DEPARTMENT_ID","FIRST_NAME",
+ "LAST_NAME","FATHER_NAME",
+ "MOTHER_NAME","PRESENT_ADDRESS","PARMANENT_ADDRESS","JOIN_DATE",
+ sys.dbms_lob.getlength("EMPLOYEE_IMAGE")"EMPLOYEE_IMAGE",
+ "SALARY","DATE_OF_BIRTH",
+ "MARITAL_STATUS","RELIGION","GENDER","NATIONALITY","NID",
+ "PHONE_NUMBER","BLOOD_GROUP","EMAIL",
+ "USER_ACTION","ACTION_DATE_TIME",
+from "EMPLOYEE"
+sys.dbms_lob.getlength("EMPLOYEE_IMAGE")"EMPLOYEE_IMAGE"
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+Image Preview for Employee Image or User Image 
+Before Image Upload:
+1. Go to Page Property
+@@@@@@@@@@@
+1.1 Javascript Group:
+==================
+ Function and Global Variable Declaration:
+ -------------------------------------------------------------------
+# P21_EMPLOYEE_ID ei jaygate Primary key column er Item set kore dite hobe
+
+function showPreview(file, itemName){
+ let img = document.querySelector(".cc-image-preview")
+ let src = URL.createObjectURL(file),
+ imageContainer = $(`#${itemName}_CONTAINER .cc-image-preview`);
+ imageContainer.empty();
+ img.setAttribute('src', src) ;
+}
+let id = document.querySelector("#P15_EMPLOYEE_ID")
+if (id !="") {
+ let imgSrc = document.querySelector(".apex-item-image");
+ console.log(imgSrc);
+ let img = document.querySelector(".cc-image-preview");
+ if(imgSrc == null) {
+ console.log('null')
+ } else {
+ img.setAttribute('src', imgSrc.src);
+ } ;
+} ;
+
+
+
+ 1.2 CSS Group:
+ -------------------
+ Inline
+ ------
+------------------------------------------------------------------------------------------------------
+
+/* form input style */
+input, textarea 
+{
+ padding: 10px 5px !important;
+ border-radius: 5px !important;
+ background-color: transparent !important;
+ transition: all 0.3s ease;
+ margin: 4px 0;
+}
+.t-Form-label 
+{
+ font-size: 14px;
+ font-weight: 400;
+ color: #333333;
+}
+.selectlist
+{
+ background-color: transparent !important;
+ padding: 10px 5px;
+ border-radius: 5px;
+ margin: 5px 0;
+ transition: all 0.3s ease;
+}
+input:focus, textarea:focus, .selectlist:focus
+{
+ outline: none !important;
+ border: 1px solid dodgerblue !important;
+}
+/* form heading style */
+.t-Region-title
+{
+ text-align: center;
+ font-size: 20px;
+ color: dodgerblue;
+ font-weight: 700;
+}
+/* preview image box style */
+.t-Form-itemWrapper 
+{
+ align-items: center !important;
+ justify-content: center !important;
+}
+img 
+{
+ width: 100%;
+ height: 100%;
+ display: block;
+}
+/* input label style */
+.t-Form-labelContainer
+{
+ align-items: center !important;
+ display: flex;
+ justify-content: flex-end;
+}
+/* calender button style */
+button.a-Button--calendar 
+{
+ height: 41px;padding: 0 10px;
+ border-radius: 5px;
+ margin: 5px 0;
+}
+.apex-item-image 
+{
+display: none;
+}
+
+
+2. Create a New Page Item
+@@@@@@@@@@@@
+Ekta page Item create kortehobe new je Image Preview er jonno
+Region niyechi sei region er P21_EMPLOYEE_IMAGE item er pore
+
+2.1 Identification:
+==============
+ Name: P21_PREVIEW_IMAGE
+ Type: Display Image
+
+2.2 Settings:
+==========
+ Based on: BLOB Column specified in item source
+
+2.3 Appearance:
+===============
+ Template: Optional-Above
+
+2.4 Advanced:
+===========
+ Post Text:
+------------------------------------------------------------------------------------------------------
+<figure id="preview_image" style='width: 144px; height: 182px; border-radius: 5px; 
+border: 1px solid #dddddd; overflow: hidden; box-shadow: 0px 5px 20px 0px #eee;'>
+<img class="cc-image-preview" />
+</figure>
+------------------------------------------------------------------------------------------------------
+
+
+2.5 Source
+ * Form Region: Employee Entry Form
+ * Column: Employee_image
+ * Data Type: BLOB
+ * Query Only: ON
+
+
+###########################################
+3. Go to Employee_image Item Like: P21_EMPLOYEE_IMAGE
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+ 3.1 Create Dynamic Actions
+ =======================
+ => Identification
+ Name: Image_Preview_DA
+ => When
+ Event: Change
+ Selection Type: Item(s)
+ Item(s): select employee_image column
+
+True:
+ =====
+ Identification
+ Action: Execute Javascript Code
+ Settings
+ Code:
+------------------------------------------------------------------------------------------------------
+ 
+let files = this.browserEvent.target.files;
+if(files.length > 0) 
+{
+ showPreview(files[0], "P21_PREVIEW_IMAGE");
+}
+------------------------------------------------------------------------------------------------------
+Affected Elements:
+================
+ Selection Type: item(s)
+ Item(s): select your created item name line: P21_PREVIEW_IMAGE
+##################################################
+
+
+Remove Image
+@@@@@@@
+1. Dialog Footer section a ekta button create korte hobe for 
+Remove Image
+Button Name: REMOVE_IMAGE
+ 
+ Layout:
+ ---------
+ Position: Next
+ Behavior:
+ ----------
+ Action: Redirect to URL
+ Target: javascript:apex.confirm('Do you want to Remove this Image?','REMOVE_IMAGE');
+ Database Action: SQL UPDATE action
+ 
+ Server-side Condition:
+ ------------------------------
+ Type: item is NOT NULL
+ Item : table er Primary column (P21_EMPLOYEE_ID)select 
+kortehobe
+
+1.2 Create Process before Close Dialog
+ 
+ Name: REMOVE_IMAGE_PROCESS
+ Type: Execute Code
+ 
+Source:
+-----------
+ 
+PL/SQL Code:
+------------------
+BEGIN
+UPDATE EMPLOYEE
+SET EMPLOYEE_IMAGE = null
+WHERE EMPLOYEE_ID = :P21_EMPLOYEE_ID ;
+EXCEPTION
+When Others Then
+ Null ;
+END ;
+
+
+Success Message:
+-----------------------
+Image Removed.
+
+Server-Side Condition:
+------------------------------
+When Button Pressed: REMOVE_IMAGE
+

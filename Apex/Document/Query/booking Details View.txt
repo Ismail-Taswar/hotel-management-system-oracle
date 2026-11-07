@@ -1,0 +1,11 @@
+create or replace view Booking_Details_view
+as
+select booking_m_date Booking_Date,first_name||' '||last_name Guest_Name ,NUMBER_OF_ADULT adult , NUMBER_OF_CHILDREN child ,
+       CELL_NUMBER, CHECK_IN_DATE, CHECK_OUT_DATE
+from   booking_m b, guest g
+where  g.guest_id = b.guest_id
+
+
+select  Booking_Date, Guest_Name adult, child, CELL_NUMBER, CHECK_IN_DATE, CHECK_OUT_DATE
+from   Booking_Details_view
+order  by Booking_Date

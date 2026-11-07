@@ -1,0 +1,9 @@
+<marquee direction="right" width="800">
+Welcome to Hotel Hilton
+</marquee>
+<marquee direction="left" width="800">
+Welcome to Hotel Hilton
+</marquee>
+<span style="color:blue "><marquee><h2><i>
+Welcome to Hotel Hilton
+</i></h2></marquee></span>

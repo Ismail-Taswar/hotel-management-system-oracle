@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DOCUMENT>
+<ROWSET>
+   <ROW>
+      <EMPLOYEE_ID></EMPLOYEE_ID>
+      <EMPLOYEE_NAME></EMPLOYEE_NAME>
+      <SALARY></SALARY>
+      <JOIN_DATE></JOIN_DATE>
+   </ROW>
+</ROWSET>
+</DOCUMENT>

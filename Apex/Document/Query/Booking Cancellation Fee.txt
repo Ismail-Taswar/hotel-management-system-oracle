@@ -1,0 +1,40 @@
+select       grant_total 
+from         booking_m 
+where        booking_m_id = 1 ; 
+
+
+
+
+select    to_date(sysdate, 'MM/DD/YYYY') - (select     booking_m_date
+                                            from       booking_m 
+                                           where      booking_m_id  = 1)
+from      dual ; 
+
+
+
+declare  
+ v_grand_total               number ;  
+ v_days                      number ; 
+ v_fee                       number ; 
+begin 
+
+select       grant_total 
+into         v_grand_total 
+from         booking_m 
+where        booking_m_id = :P75_BOOKING_M_ID ; 
+
+
+select    to_date(sysdate, 'MM/DD/YYYY') - (select     booking_m_date
+                                            from       booking_m 
+                                           where      booking_m_id  = :P75_BOOKING_M_ID)
+           into  v_days
+from      dual ; 
+
+ if     v_days = 1 then 
+  :P75_CANCELLATION_FEE :=  (v_grand_total* 0) ; 
+  elsif  v_days >= 1 then 
+  :P75_CANCELLATION_FEE :=  (v_grand_total* 0.10) ; 
+  elsif v_days > 2 then 
+  :P75_CANCELLATION_FEE :=  v_grand_total* 0.20 ; 
+  end if ; 
+end ; 

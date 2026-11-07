@@ -1,0 +1,29 @@
+
+
+
+
+DYNAMIC ACTIONS on DISCOUNT for GRANT_TOTAL
+============================================
+
+
+When: Key Release
+--------------------------
+
+ True:
+ Action: Execute Server-side Code
+ Settings: 
+ Language: PL/SQL
+ 
+PL/SQL Code:
+
+
+------------------------------------------------------------------------
+:P57_GRANT_TOTAL := NVL(:P57_TOTAL_AMOUNT, 0) - NVL(((:P57_TOTAL_AMOUNT*:P57_DISCOUNT)/100),0);
+-----------------------------------------------------------------------
+
+
+
+
+
+Items to Submit: P57_TOTAL_AMOUNT,P57_DISCOUNT
+Items to Return: P57_GRANT_TOTAL

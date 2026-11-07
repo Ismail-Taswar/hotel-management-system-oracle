@@ -1,0 +1,15 @@
+
+select count(room_id) total
+from   ALL_ROOM_AVAI_VIEW1
+
+
+  CREATE OR REPLACE FORCE EDITIONABLE VIEW "ALL_ROOM_AVAI_VIEW1" ("ROOM_NUMBER", "STATUS", "ROOM_ID") AS 
+  select distinct r.room_number,status,r.room_id
+ from   room r,room_status rs
+ where  r.room_id = rs.room_id(+)
+ and    r.room_id not in (select room_id
+                         from   ROOM_STATUS
+                         where  check_in_date <= sysdate
+                         and    check_out_date > sysdate
+                         and nvl(STATUS,'Cancelled') = 'Cancelled')
+;

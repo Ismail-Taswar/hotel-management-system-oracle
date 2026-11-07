@@ -1,0 +1,329 @@
+declare 
+v_hotel_name  varchar2(100):='Hotel Intourist';
+cursor heron is
+-------------------------------------------------------------------------------------
+select distinct booking_id,booking_m_date,booking_m.guest_id,
+       to_char(check_in_date,'MM/DD/YYYY') check_in_date ,
+       to_char(check_out_date,'MM/DD/YYYY') check_out_date,total_booked_days,EMERGENCY_CELL_NUMBER,
+       number_of_adult,room_number,nvl(booking_d.room_rent,0) room_rent ,nvl(booking_d.total_rent,0) total_rent,
+       nvl(total_amount,0) total_amount,nvl(discount,0) discount,
+       nvl(grant_total,0) grant_total ,nvl(advanced_paid,0) advanced_paid ,nvl(due,0) due,payment_mode_name,payment_status
+from   payment_mode,room,guest,booking_d,booking_m 
+where  booking_d.booking_m_id=booking_m.booking_m_id
+and    booking_d.room_id= room.room_id
+and    booking_m.PAYMENT_MODE_ID= payment_mode.PAYMENT_MODE_ID(+)
+and    booking_id=:P60_BOOKING_ID;
+-------------------------------------------------------------------------------------------
+
+ record_heron    heron%rowtype;
+ V_GUEST_NAME    VARCHAR2(100);
+ V_ADDRESS       VARCHAR2(100);
+ V_CELL_NUMBER   VARCHAR2(50);
+ V_taka_in_word  varchar2(3000);
+
+-------------------------------------------------------------------------
+begin
+   select taka_in_word(nvl(grant_total,0))
+   into V_taka_in_word
+   from booking_m
+   where booking_id=:P60_BOOKING_ID;
+-----------------------------------------------------------
+htp.p('<a id="b_exit" type="button1" class="button button3" class="exit" 
+'||'href="'||APEX_UTIL.PREPARE_URL('r/apex/app-builder/pagedesigner?fb_flow_id=196568&fb_flow_page_id=7&session=6720167975431')||'">Close</a>
+<input type="button1" class="button button1" class="t-Icon t-Icon--right fa fa-print" id="print" 
+type="button" onclick="printdiv(''div_print1'');" value="Print"/><br/>
+ 
+<div id="div_print1" style="margin-top:5px;"> '); 
+-----------------------------------------------------------
+OPEN heron;
+FETCH heron INTO record_heron;
+CLOSE heron;
+select first_name||' '||last_name Guest_name,ADDRESS,CELL_NUMBER 
+INTO   V_GUEST_NAME,V_ADDRESS,V_CELL_NUMBER
+FROM  guest
+WHERE guest_ID = record_heron.guest_ID ;
+--------------------------------------------------
+
+htp.p('
+ <html>
+  <header>
+    <title>Booking ID</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>      
+      img {float: left;
+          }
+
+      h2.page-header{
+          margin : 0;
+          padding: 0;
+          }
+
+       h3.page-header {
+         align   :center;
+         margin  : 0;
+         padding : 0;
+         }
+
+       h1 {
+          text-align: center;
+          text-transform: uppercase;
+          }
+
+       p  {
+          text-align: center;
+          }
+       
+       .napkin2,th,td {
+           border: 1px solid black ;
+           border-collapse: collapse;
+           padding: 5px;
+           }
+
+        .napkin,th {
+                border: 1px solid #607d8b ;
+                border-collapse: collapse;
+                padding: 5px;
+                }
+         .p1 {
+               border: 0px;
+               text-align: left;
+               }
+
+         .td1 {
+               border: 0px;
+               text-align: left;
+               }
+
+          .td1 {
+               border: 0px;
+               text-align: left;
+               }
+
+          .full {
+               width:100%;
+               }
+
+           .p00 {
+              text-align: right;
+              border: 0px;
+              }
+
+           .m2 {
+               text-align:center;
+               }
+
+           .m3
+              {
+               text-align: center;
+              }
+
+           .m4{
+              text-align: center;
+              border: 1px solid #607d8b;
+              }
+
+           .m4{
+              text-align: center;
+              border: 1px solid #607d8b;
+              }
+
+           .m5{
+              text-align: center;
+              }
+            .m1,.m2,.m3.m4,.m5 {
+               border: 0px solid #607d8b;
+               }
+            .m1{
+                padding-left: 5px;
+                }
+            .m2{
+                padding-right: 5px;
+                 }
+             .m3 {
+                padding-right: 5px;
+                 }
+             .m4{
+                padding-right: 5px;
+                }
+            .lower { 
+                padding-top: 50px;
+                }
+            .low,.low1 {
+                 text-align: center;
+                 }
+          </style>
+      </header>
+
+
+  <body>
+    ');
+
+     htp.p('
+          <h2 class="page-header" align="center">'||V_Hotel_NAME||'</h2>
+          <h3 class="page-header" align="center" margin-right="50px">7/A Dhanmondi, Dhaka-1211</h3>
+          <h3 class="page-header" align="center"margin-right="50px">+8801755092443</h3>
+          <h3 class="page-header" align="center"margin-right="50px">heronsbp@gmail.com</h3>
+          <h3 class="page-header" align="center"><u>Booking Information Details </u></h3>
+          ');
+    
+     htp.p('
+          <table class="full" align="center" width="100%">
+              <tr>
+              <td class="td1">
+            <table class="Patient">
+              <tr>
+                <th class="p1">Booking ID </th>
+                <td class="p1">: &nbsp; '||record_heron.booking_id||'</td>
+               </tr> 
+             <tr>
+                <th class="p1"> Guest Name </th>
+                <td class="p1">: &nbsp; '||V_GUEST_NAME||'</td>
+             </tr> 
+              <tr>
+                <th class="p1">Total Adult </th>
+                <td class="p1">: &nbsp; '||record_heron.number_of_adult||'</td>
+              </tr> 
+              <tr>
+                  <th class="p1">Mobile No</th>
+                  <td class="p1">: &nbsp; '||record_heron.EMERGENCY_CELL_NUMBER||'</td>
+                </tr>
+            </table>
+                </td>
+                <td class="td1">
+            <table class="patient2" align="right">
+                <tr>
+                  <th class="p1">Booking Date</th>
+                  <td class="p1">: &nbsp; '||record_heron.booking_m_date||'</td>
+                </tr>
+                <tr>
+                  <th class="p1">Check In Date</th>
+                  <td class="p1">: &nbsp; '||record_heron.check_in_date||'</td>
+                </tr>
+                <tr>
+                  <th class="p1">Check Out Date</th>
+                  <td class="p1">: &nbsp; '||record_heron.check_out_date||'</td>
+                </tr>
+             </table>
+          </table> ');
+-------------------------------------
+  htp.p(' 
+      <table class="napkin2" align="center" width=100% >
+         <thead>
+          <tr>
+            <th width="50px">SL#</th> 
+            <th width="400px">Room Number</th>
+            <th width="100px">Total Booked Days</th> 
+            <th width="100px">Room Rent</th> 
+            <th width="100px">Total Rent</th> 
+          </tr>
+        </thead> 
+     ');
+       for r in ( select  ROWNUM SL#,room_number,nvl(booking_d.room_rent,0) room_rent,total_booked_days,
+                          nvl(booking_d.total_rent,0) total_rent   
+                  from   room,booking_d,booking_m 
+                  where  booking_d.booking_m_id=booking_m.booking_m_id
+                  and    booking_d.room_id= room.room_id
+                  and    booking_id=:P60_BOOKING_ID
+          ) loop
+ htp.p('
+     <table class="napkin2" align="center" width=100% > 
+        <tr>
+           <td width="50px"  align=center>'||' '||htf.escape_sc(r.SL#)||'</td>
+           <td width="400px" align=left>'||' '||htf.escape_sc(r.room_number)||'</td>
+           <td width="100px" align=center>'||' '||htf.escape_sc(r.total_booked_days)||'</td>
+           <td width="100px" align=right>'||' '||htf.escape_sc(to_char(r.room_rent,'99,99,999.99'))||'</td>
+           <td width="100px" align=right>'||' '||htf.escape_sc(to_char(r.total_rent ,'99,99,999.99'))||'</td>
+        </tr>
+     </table>
+       ');
+ end loop;
+ 
+
+htp.p('
+    </table>
+    </body>
+      ');
+
+ htp.p('
+
+    <tr>
+       <th class="p1"></th>
+        <td class="p1"> &nbsp; '||V_taka_in_word||'</td>
+    </tr>
+       <td class="td1">
+
+ <table class="patient2" align="right"> 
+       <tr>
+         <th class="p1">Total Amount </th>
+            <td class="p1">: &nbsp; '||to_char(record_heron.total_amount,'99,99,99,999.99')||'</td>
+       </tr>
+
+       <tr>
+          <th class="p1"> Discount </th>
+            <td class="p1">: &nbsp; '||record_heron.DISCOUNT||'%'||'</td>
+  
+      <tr>
+          <th class="p1"> Grand Total </th>
+           <td class="p1">: &nbsp; '||to_char(record_heron.grant_total,'99,99,99,999.99')||'</td>
+      </tr>
+
+      <tr>
+         <th class="p1">Advanced Paid </th>
+          <td class="p1">: &nbsp; '||to_char(record_heron.advanced_paid,'99,99,99,999.99')||'</td>
+      </tr>
+      <tr>
+          <th class="p1"> Due </th>
+           <td class="p1">: &nbsp; '||to_char(record_heron.due,'99,99,99,999.99')||'</td>
+     </tr>
+      <tr>
+       <th class="p1"> Payment Mode </th>
+        <td class="p1">: &nbsp; '||record_heron.payment_mode_name||'</td>
+     </tr>
+     <tr>
+       <th class="p1"> Payment Status</th>
+        <td class="p1">: &nbsp; '||record_heron.payment_status||'</td>
+     </tr>
+    </table>
+      </td>
+   ') ;
+   htp.p('</div>') ;
+end ;
+
+
+
+
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 4px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.button1 {
+  background-color: white;
+  color: black;
+  border: 2px solid #008CBA;
+}
+.button1:hover {
+  background-color: #008CBA;
+  color: white;
+}
+.button3 {
+  background-color: white;
+  color: black;
+  border: 2px solid #f44336;
+}
+.button3:hover {
+  background-color: #f44336;
+  color: white;
+}
+
+

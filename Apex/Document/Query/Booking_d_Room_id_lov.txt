@@ -1,0 +1,15 @@
+select    ROOM_ID,Room_Number,status
+from      ROOM_With_status
+where     room_id not in(select ROOM_ID
+                        from   room_status
+                        where  Status ='Booked'
+                        and    :P61_check_in_date = CHECK_IN_DATE
+                        or     '05/11/2024' = CHECK_Out_DATE
+                        or     :P61_check_in_date = CHECK_IN_DATE
+                        or     :P61_check_in_date < CHECK_in_DATE 
+                        and    :P61_check_in_date > CHECK_Out_DATE
+                        or     :P61_CHECK_OUT_DATE < CHECK_in_DATE 
+                        and    :P61_CHECK_OUT_DATE > CHECK_Out_DATE
+                        )
+or nvl(status,'Cancelled') ='Cancelled'
+order by ROOM_ID

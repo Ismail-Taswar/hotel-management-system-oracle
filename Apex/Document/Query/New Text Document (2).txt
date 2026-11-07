@@ -1,0 +1,15 @@
+select    Room_Number,ROOM_ID
+from      ROOM_With_status
+where     room_id not in(select ROOM_ID
+                        from   room_status
+                        where  Status ='Booked'
+                        and    to_char(:P61_CHECK_IN_DATE1,'MM/DD/RRRR') = to_char(CHECK_IN_DATE,'MM/DD/RRRR')
+                        or     to_char(:P61_CHECK_OUT_DATE1,'MM/DD/RRRR') = to_char(CHECK_Out_DATE,'MM/DD/RRRR')
+                        or     to_char(:P61_CHECK_IN_DATE1,'MM/DD/RRRR') = to_char(CHECK_IN_DATE,'MM/DD/RRRR')
+                        or     to_char(:P61_CHECK_IN_DATE1,'MM/DD/RRRR') < to_char(CHECK_in_DATE,'MM/DD/RRRR')
+                        and    to_char(:P61_CHECK_IN_DATE1,'MM/DD/RRRR') > to_char(CHECK_Out_DATE,'MM/DD/RRRR')
+                        or     to_char(:P61_CHECK_OUT_DATE1,'MM/DD/RRRR') < to_char(CHECK_in_DATE,'MM/DD/RRRR') 
+                        and    to_char(:P61_CHECK_OUT_DATE1,'MM/DD/RRRR') > to_char(CHECK_Out_DATE,'MM/DD/RRRR')
+                        )
+or nvl(status,'Cancelled') ='Cancelled'
+order by ROOM_ID

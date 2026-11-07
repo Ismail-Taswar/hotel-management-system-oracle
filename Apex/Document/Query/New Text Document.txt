@@ -1,0 +1,35 @@
+select    Room.ROOM_ID,Room_Number
+from      Room,room_status
+where     Room.ROOM_ID = room_status.ROOM_ID
+and       room_id not in(select nvl(ROOM_ID, 0)
+                        from   BOOKING_M, BOOKING_D,room_status
+                        where  BOOKING_M.BOOKING_M_ID = BOOKING_D.BOOKING_M_ID
+                        and    Status =booked
+                        --and    to_char(:BOOKING_M.CHECK_OUT_DATE, 'rrrrmmdd') = to_char(CHECK_IN_DATE, 'rrrrmmdd')
+                       -- or     to_char(:BOOKING_M.CHECK_OUT_DATE, 'rrrrmmdd') = to_char(CHECK_Out_DATE, 'rrrrmmdd')
+                        --or     to_char(:BOOKING_M.CHECK_in_DATE, 'rrrrmmdd') = to_char(CHECK_IN_DATE, 'rrrrmmdd')
+                       -- or     :BOOKING_M.CHECK_in_DATE < CHECK_in_DATE 
+                        --and    :BOOKING_M.CHECK_in_DATE > CHECK_Out_DATE
+                        --or     :BOOKING_M.CHECK_Out_DATE < CHECK_in_DATE 
+                        --and    :BOOKING_M.CHECK_Out_DATE > CHECK_Out_DATE
+                        )
+or nvl(status,'available') ='Cancelled'
+order by ROOM_ID
+
+
+
+select    ROOM_ID,Room_Number,status
+from      ROOM_With_status
+where     room_id not in(select ROOM_ID
+                        from   room_status
+                        where  Status ='Booked'
+                        and    :P61_check_in_date = CHECK_IN_DATE
+                        or     '05/11/2024' = CHECK_Out_DATE
+                        or     :P61_check_in_date = CHECK_IN_DATE
+                        or     :P61_check_in_date < CHECK_in_DATE 
+                        and    :P61_check_in_date > CHECK_Out_DATE
+                        or     :P61_CHECK_OUT_DATE < CHECK_in_DATE 
+                        and    :P61_CHECK_OUT_DATE > CHECK_Out_DATE
+                        )
+or nvl(status,'Cancelled') ='Cancelled'
+order by ROOM_ID

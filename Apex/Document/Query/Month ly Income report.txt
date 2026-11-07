@@ -1,0 +1,18 @@
+  SELECT TO_date(booking_m_date, 'YYYY-MM') AS month,SUM(ADVANCED_PAID) AS total_advance_paid,
+         SUM(net_pay_bill) AS total_net_pay_bill
+  FROM   booking_m bm,bill b
+  where  bm.booking_m_id = b.booking_m_id  
+  group  by TO_CHAR(booking_m_date, 'YYYY-MM')  
+  order  by TO_CHAR(booking_m_date, 'YYYY-MM'); 
+
+
+f?p=&APP_ID.:0:&SESSION.:PRINT_REPORT=Monthly%20Income
+
+
+
+SELECT   booking_m.booking_m_id,booking_m.booking_m_date AS event_date, 'ADVANCED Paid: ' || booking_m.ADVANCED_PAID || ',
+         Net Pay Bill: ' || bill.net_pay_bill AS description  -- Description for the calendar event
+FROM     booking_m,bill
+WHERE    booking_m.booking_m_id = bill.booking_m_id 
+  and    booking_m.booking_m_date IS NOT NULL  
+ORDER BY booking_m.booking_m_date;

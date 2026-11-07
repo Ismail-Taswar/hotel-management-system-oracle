@@ -1,0 +1,45 @@
+create or replace TRIGGER Booking_d2_id_PK_TRIG
+before
+insert on Booking_d2
+for each row
+begin
+select nvl(max(to_number(Booking_d2_id)), 0) + 1
+into :new.Booking_d2_id
+from Booking_d2 ;
+end;
+/
+
+
+
+
+declare
+v_Booking_M_ID number ;
+begin
+select nvl(max(to_number(Booking_M_ID)),0) + 1
+into v_Booking_M_ID
+from Booking_M ;
+if :P57_Booking_M_ID is null then
+return v_Booking_M_ID ;
+else
+return :P57_Booking_M_ID ;
+end if ;
+exception
+when others then
+null ;
+end ;
+
+
+select BOOKING_ID, Booking_M_DATE, first_name ||' '||last_name Guest_name, booking_m_ID
+from booking_M, Guest
+where booking_M.Guest_id = Guest.Guest_id(+)
+order by booking_M_ID desc
+
+begin
+delete BOOKING_d
+where BOOKING_M_id = :P57_BOOKING_M_ID ;
+delete BOOKING_m
+where BOOKING_M_id = :P57_BOOKING_M_ID ;
+end ;
+
+
+

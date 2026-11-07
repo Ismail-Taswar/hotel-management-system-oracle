@@ -1,0 +1,11 @@
+SELECT RTs.ROOM_TYPE_NAME, Rs.ROOM_TYPE_ID, RMNUM
+            FROM (  SELECT RT.ROOM_TYPE_ID, COUNT (RT.ROOM_TYPE_ID) RMNUM
+                      FROM ROOM R, ROOM_TYPE RT, BOOKING_D BKD
+                     WHERE     BKD.ROOM_ID = R.ROOM_ID
+                           AND R.ROOM_TYPE_ID = RT.ROOM_TYPE_ID
+                  GROUP BY RT.ROOM_TYPE_ID) Rs,
+                 ROOM_TYPE RTS
+           WHERE Rs.ROOM_TYPE_ID = RTS.ROOM_TYPE_ID
+        ORDER BY RMNUM DESC
+
+

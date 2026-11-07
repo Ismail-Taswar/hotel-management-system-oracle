@@ -1,0 +1,14 @@
+
+
+url: f?p=&APP_ID.:0:&SESSION.:PRINT_REPORT=Monthly%20Expense
+
+
+select  ed.EXPENSE_M_ID,EXPENSE_TYPE_NAME,EXPENSE_AMOUNT,BRANCH_NAME,to_char(EXPENSE_DATE,'fmMonth-YYYY') EXPENSE_DATE,Expense_by
+from    expense_m em,EXPENSE_D ed,EXPENSE_TYPE et,BRANCH b
+where   ed.EXPENSE_M_ID = em.EXPENSE_M_ID
+and     ed.EXPENSE_TYPE_id = et.EXPENSE_TYPE_id 
+and     em.BRANCH_ID = b.BRANCH_ID
+and       to_char(em.EXPENSE_DATE,'fmMonth-YYYY') =  :P20_MONTHLY_EXPENSE; 
+
+
+http://imran:8080/ords/f?p=&APP_ID.:0:&SESSION.:PRINT_REPORT=Monthly%20Expense

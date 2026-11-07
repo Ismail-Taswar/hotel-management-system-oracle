@@ -1,0 +1,42 @@
+select count(CHECK_IN_ID) Today_check_in
+from   CHECK_IN
+where  ACTION_DATE_TIME >= to_date(sysdate, 'mm-dd-rrrr')
+
+
+
+
+select count(Availavel) total
+from   Room_avai_view
+union
+select count(CHECK_IN_ID) Today_check_in
+from   CHECK_IN
+where  ACTION_DATE_TIME >= to_date(sysdate, 'mm-dd-rrrr')
+Union
+select count(CHECK_OUT_ID) Today_CHECK_OUT
+from   CHECK_OUT
+where  ACTION_DATE_TIME >= to_date(sysdate, 'mm-dd-rrrr')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+select * from
+(select count(Availavel) total_Room, null Today_check_in, null Today_CHECK_OUT
+from   Room_avai_view
+union
+select null total_Room ,count(CHECK_IN_ID) Today_check_in, null Today_CHECK_OUT
+from   CHECK_IN
+where  ACTION_DATE_TIME >= to_date(sysdate, 'mm-dd-rrrr')
+Union
+select null total_Room, null Today_check_in, count(CHECK_OUT_ID) Today_CHECK_OUT
+from   CHECK_OUT
+where  ACTION_DATE_TIME >= to_date(sysdate, 'mm-dd-rrrr'))

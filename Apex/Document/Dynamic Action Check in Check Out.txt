@@ -1,0 +1,37 @@
+
+---------------Check In -----------------
+
+SELECT Booking_M.Guest_ID,FIRST_NAME||' '||LAST_NAME Guest_name,CHECK_OUT_DATE,CHECK_IN_DATE
+into   :P48_GUEST_ID,:P48_GUEST_NAME,:P48_CHECK_OUT_DATE,:P48_CHECK_IN_DATE
+FROM   Booking_M,Guest
+WHERE  Booking_m_id = :P48_BOOKING_M_ID
+and    Booking_M.Guest_ID = Guest.Guest_ID
+and    Booking_M.guest_id not in (select BOOKING_M.guest_id
+                                 from   CHECK_IN,BOOKING_M
+                                  where  CHECK_IN.BOOKING_M_ID = BOOKING_M.BOOKING_M_ID)
+order by guest_id ;  
+
+
+--------------- Check Out ----------------
+
+SELECT Booking_M.Guest_ID,BOOKING_ID,FIRST_NAME||' '||LAST_NAME Guest_name,CHECK_OUT_Date,check_in_id
+into   :P47_GUEST_ID,:P47_BOOKING_M_ID,:P47_GUEST_NAME,:P47_CHECK_OUT_DATE,:P47_CHECK_in_ID
+FROM   CHECK_IN,Booking_M,Guest
+WHERE  booking_m.booking_m_id = :P47_BOOKING_M_ID
+and    CHECK_IN.BOOKING_M_ID = Booking_M.BOOKING_M_ID
+and    Booking_M.Guest_ID = Guest.Guest_ID
+and    booking_m.guest_id not in (select booking_m.guest_id
+                                 from   CHECK_IN,BOOKING_M,CHECK_OUT
+                                 where  CHECK_IN.BOOKING_M_ID = BOOKING_M.BOOKING_M_ID
+                                 and    CHECK_OUT.Check_in_id = CHECK_IN.Check_in_id)
+order by BOOKING_ID ;
+
+--------------- lov -----------
+
+SELECT b.BOOKING_ID,c.booking_m_id
+FROM   CHECK_IN c,Booking_M b
+where  c.booking_m_id = b.booking_m_id
+and    b.guest_id not in (select booking_m.guest_id
+                                 from   CHECK_IN,BOOKING_M,CHECK_OUT
+                                 where  CHECK_IN.BOOKING_M_ID = BOOKING_M.BOOKING_M_ID
+                                 and    CHECK_OUT.Check_in_id = CHECK_IN.Check_in_id)

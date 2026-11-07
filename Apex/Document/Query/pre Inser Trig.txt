@@ -1,0 +1,10 @@
+create or replace TRIGGER Cancellation_id_PK_TRIG
+before
+insert on Cancellation
+for each row
+begin
+select nvl(max(to_number(Cancellation_id)), 0) + 1
+into :new.Cancellation_id
+from Cancellation ;
+end;
+/

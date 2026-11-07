@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DOCUMENT>
+<ROWSET>
+   <ROW>
+      <ORDER_DATE></ORDER_DATE>
+      <FOOD_NAME></FOOD_NAME>
+      <FOOD_QUANTITY></FOOD_QUANTITY>
+      <FOOD_RATE></FOOD_RATE>
+      <TOTAL_AMOUNT></TOTAL_AMOUNT>
+   </ROW>
+</ROWSET>
+</DOCUMENT>

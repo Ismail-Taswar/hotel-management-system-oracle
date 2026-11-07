@@ -1,0 +1,44 @@
+select    user_type_name||'-('||(count(user_info_id))||')' user_type_name
+from      USER_VIEW
+group     user_type_name
+order by  user_type_name 
+
+
+select distinct Salary||'-('||(count(employee_id))||')' Salary    
+from employee_view           
+group  by Salary                        
+
+
+select distinct e.department_id,
+       department_name||'-('||(count(employee_id))||')' department_name
+from   employee e, department d
+where  u.user_info_id =t.user_type_id
+group  by e.department_id, department_name
+order by  department_name 
+
+select    distinct city||'-('||(count(GUEST_ID))||')' city  
+from      guest_view
+group  by city 
+order by  city
+
+
+select distinct BOOKING_M_ID, GUEST_ID, BOOKING_ID, FIRST_NAME||' '||LAST_NAME Guest_name, DUE
+from   BOOKING_VIEW
+
+
+select BILL_ID,BILL.ACTION_USER,PAYMENT_DESC,BILL.INVOICE_NUMBER,BOOKING_DATE,PAY,BILL.BOOKING_M_ID,
+       BILL.SERVICE_M_ID,BILL.FOOD_M_ID,BILL.PAYMENT_MODE_ID,BOOKING_M.GUEST_ID,BOOKING_M.BOOKING_ID,
+       FIRST_NAME,LAST_NAME,SERVICE_M.INVOICE_NUMBER,FOOD_M.INVOICE_NUMBER,SERVICE_D_ID,SERVICE_D.SERVICE_ID,
+       SERVICE_DURATION,SERVICE.SERVICE_AMOUNT,FOOD_NAME,FOOD.FOOD_RATE,FOOD_QUANTITY
+from   BILL,SERVICE_M,SERVICE_D,SERVICE,BOOKING_M,BOOKING_D,FOOD_M,FOOD_D,FOOD,PAYMENT_MODE,GUEST
+where  BILL.BOOKING_M_ID = BOOKING_M.BOOKING_M_ID
+and    BILL.SERVICE_M_ID = SERVICE_M.SERVICE_M_ID
+and    BILL.FOOD_M_ID = FOOD_M.FOOD_M_ID
+and    SERVICE_M.BOOKING_M_ID = BOOKING_M.BOOKING_M_ID
+and    SERVICE_D.SERVICE_M_ID = SERVICE_M.SERVICE_M_ID
+and    SERVICE_D.SERVICE_ID = SERVICE.SERVICE_ID
+and    BILL.PAYMENT_MODE_ID = PAYMENT_MODE.PAYMENT_MODE_ID
+and    FOOD_M.BOOKING_M_ID = BOOKING_M.BOOKING_M_ID
+and    FOOD_D.FOOD_M_ID = FOOD_M.FOOD_M_ID
+and    FOOD_D.FOOD_ID = FOOD.FOOD_ID 
+and    BOOKING_M.GUEST_ID = GUEST.GUEST_ID;

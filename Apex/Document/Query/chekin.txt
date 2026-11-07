@@ -1,0 +1,18 @@
+SELECT Booking_M.Guest_ID,BOOKING_ID,FIRST_NAME||' '||LAST_NAME Guest_name,CHECK_OUT_DATE,CHECK_IN_DATE
+FROM   Booking_M,Guest
+WHERE  Booking_M.Guest_ID = Guest.Guest_ID
+and    Booking_M.guest_id not in (select BOOKING_M.guest_id
+                                 from   CHECK_IN,BOOKING_M
+                                  where  CHECK_IN.BOOKING_M_ID = BOOKING_M.BOOKING_M_ID)
+order by guest_id 
+
+
+SELECT Booking_M.Guest_ID,FIRST_NAME||' '||LAST_NAME Guest_name,CHECK_OUT_DATE,CHECK_IN_DATE
+into   :P21_GUEST_ID,:P37_GUEST_NAME,:P21_CHECK_OUT_DATE,:P21_CHECK_IN_DATE
+FROM   Booking_M,Guest
+WHERE  Booking_m_id = :P21_BOOKING_M_ID
+and    Booking_M.Guest_ID = Guest.Guest_ID
+and    Booking_M.guest_id not in (select BOOKING_M.guest_id
+                                 from   CHECK_IN,BOOKING_M
+                                  where  CHECK_IN.BOOKING_M_ID = BOOKING_M.BOOKING_M_ID)
+order by guest_id ;  

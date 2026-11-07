@@ -1,0 +1,50 @@
+
+============= Left Joine =============
+
+select 
+       'Room: '||r.ROOM_id ROOM_id,
+         r.ROOM_id CARD_TITLE,
+        case when TRUNC(SYSDATE) = rs.CHECK_IN_DATE
+             and  TRUNC(SYSDATE) < rs.CHECK_OUT_DATE
+             and  rs.STATUS='Booked' then
+            'u-color-2'
+        else
+            'u-color-5'
+        end card_color,
+        case when TRUNC(SYSDATE) = rs.CHECK_IN_DATE 
+             and TRUNC(SYSDATE) < rs.CHECK_OUT_DATE
+             and  rs.STATUS='Booked' then
+            'cardbkd'
+        else
+            'cardnotbkd'
+        end card_sts
+ FROM
+  room r
+LEFT JOIN
+  room_status rs
+  ON r.room_id = rs.room_id
+order by r.ROOM_id
+
+
+============= Oracle Joine ===================== 
+
+select 
+       'Room: '||r.ROOM_id ROOM_id,
+         r.ROOM_id CARD_TITLE,
+        case when TRUNC(SYSDATE) = rs.CHECK_IN_DATE
+             and  TRUNC(SYSDATE) < rs.CHECK_OUT_DATE
+             and  rs.STATUS='Booked' then
+            'u-color-2'
+        else
+            'u-color-5'
+        end card_color,
+        case when TRUNC(SYSDATE) = rs.CHECK_IN_DATE 
+             and TRUNC(SYSDATE) < rs.CHECK_OUT_DATE
+             and  rs.STATUS='Booked' then
+            'cardbkd'
+        else
+            'cardnotbkd'
+        end card_sts
+ FROM room r,room_status rs
+ where r.room_id = rs.room_id
+ order by r.ROOM_id

@@ -1,0 +1,47 @@
+BEGIN
+htp.p('<style>
+table
+{
+ border: 2px solid red;
+ border-collapse: collapse;
+}
+th
+{
+ border: 1px solid blue;
+ background-color:yellow;
+ font-size: 14px;
+  padding: 3px;
+}
+td
+{
+ border: 1px solid black;
+ text-align: center;
+ padding: 1px 3px;
+}
+</style>');
+----------------- Column Heading -----------------
+htp.p('<center> <table style="width:80%">
+ <tr>
+  <th style="width: 100px">Employee ID</th>
+  <th>Employee Name</th>
+  <th style="width: 160px">Salary</th>
+  <th style="width: 150px">Join Date</th>
+ </tr>');
+------------ Type your Query ------------------------------------------
+FOR nur in (select employee_id, First_name||' '||last_name employee_name,
+            to_char(salary, '99,99,999.00')salary,
+            to_char(join_date, 'DD-Mon-RRRR')join_date
+          from EMPLOYEE_VIEW
+          order by employee_id)
+----------------------------------------------------------------------
+----------------- Column Data -----------------
+LOOP
+ htp.p('<tr>
+   <td style="text-align: center">'||htf.escape_sc(nur.employee_id)||'</td>
+   <td style="text-align: Left">'||htf.escape_sc(nur.employee_name)||'</td>
+   <td style="text-align: right">'||htf.escape_sc(nur.salary)||'</td>
+   <td style="text-align: center">'||htf.escape_sc(nur.join_date)||'</td>
+   <tr>');
+END LOOP;
+htp.p(' </table></center>') ;
+END ;

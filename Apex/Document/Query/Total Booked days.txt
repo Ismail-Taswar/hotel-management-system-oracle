@@ -1,0 +1,12 @@
+
+
+
+
+P57_TOTAL_BOOKED_DAYS
+
+
+BEGIN
+  :P57_TOTAL_BOOKED_DAYS := to_date(:P57_CHECK_OUT_DATE,'mm/dd/yyyy') - to_date(:P57_CHECK_IN_DATE,'mm/dd/yyyy');
+END;
+
+

@@ -1,0 +1,21 @@
+select HOTEL_CODE,
+       ROOM_ID,
+        CASE WHEN STATUS='Booked' then
+        '<p style="font-size:30px; background-color:#FF1E08; color:#FFFC44; border-radius:25%
+        ">'||ROOM_ID||'</p>'
+        ELSE
+          '<p style="font-size:30px; background-color:#12C800; color:white; border-radius:25%
+        ">'||ROOM_ID||'</p>'
+        END  CARD_TITLE,
+       --STATUS,' javascript:$s(''P1_RID'','''||To_char(ROOM_ID)||''')' as CARD_LINK
+  from All_Room_avai_view
+  order by ROOM_ID
+
+
+SELECT b.booking_id,'Guest : '||g.GUEST_ID||'-'||g.first_name||' '||g.last_name CARD_TITLE,'Check In: '||b.Check_in_date CARD_SUBTITLE
+FROM booking_m b,booking_d bd, CHECK_IN d, guest g
+WHERE bd.booking_m_id = b.booking_m_id
+and   b.booking_m_id = d.booking_m_id
+AND   g.GUEST_ID= b.GUEST_ID
+AND  bd.room_id= :P1_RID
+

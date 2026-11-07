@@ -1,0 +1,17 @@
+select distinct booking_m_id,booking_id,guest_name,due, service_bill,food_bill 
+from   Bill_VIEW
+
+
+select distinct booking_m_id,guest_name,due, service_bill,food_bill 
+into   P35_BOOKING_M_ID,P35_GUEST_NAME,P35_BOOKING_DUE,:P35_SERVICE_M_ID,P35_FOOD_M_ID
+from   Bill_VIEW
+
+
+select bm.booking_Id,ci.booking_m_id
+from   check_out c, booking_m bm, check_in ci
+where  c.check_in_id = ci.check_in_id
+and    ci.booking_m_id = bm.booking_m_id
+and    ci.booking_m_id not in (select booking_m_Id
+                              from   bill)
+order by booking_Id desc ;
+                              

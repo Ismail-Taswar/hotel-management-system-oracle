@@ -1,0 +1,13 @@
+begin
+ if :P53_SERVICE_M_ID is null then
+ select nvl(max(to_number(SERVICE_M_ID)),0) + 1
+ into   :P53_SERVICE_M_ID
+ from    SERVICE_M;
+ end if ;
+ 
+ :P53_action_user := v('APP_USER') ;
+
+exception
+ when others then null;
+end ;
+

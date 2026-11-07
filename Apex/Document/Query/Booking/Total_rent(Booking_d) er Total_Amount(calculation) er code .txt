@@ -1,0 +1,101 @@
+
+
+Total_rent(Booking_d) er Total_Amount(calculation) er code :
+==============================================================
+
+
+
+JavaScript for TOTAL_AMOUNT
+===========================
+
+Go to Page Property: 
+----------------------------
+ Page 11: Booking Master
+
+
+ Navigation: 
+ Warn on Unsaved Changes: Off korte hobe.
+
+
+FUNCTION AND GLOBAL VARIABLE : ( akhane gia nicher code paste korte hobe):
+----------------------------------------------------------------------------
+
+
+(function($) 
+{
+ function update(model) 
+ {
+ var salKey = model.getFieldKey("TOTAL_RENT"),
+ total = 0;
+ console.log(">> starting sum TOTAL_RENT column")
+ model.forEach(function(record, index, id) 
+ {
+ var sal = parseFloat(record[salKey]), 
+ meta = model.getRecordMetadata(id);
+ if (!isNaN(sal) && !meta.deleted && !meta.agg) 
+ {
+ total += sal;
+ }
+ });
+ console.log(">> setting sum SAL column to " + total)
+ $s("P11_TOTAL_AMOUNT", total);
+ }
+ $(function() 
+ {
+ $("#nur").on("interactivegridviewmodelcreate", function(event, ui) 
+ {
+ var sid,
+ model = ui.model;
+ if ( ui.viewId === "grid" ) 
+ {
+ sid = model.subscribe( 
+ {
+ onChange: function(type, change) 
+{
+ console.log(">> model changed ", type, change);
+ if ( type === "set" ) 
+ {
+ 
+ if (change.field === "TOTAL_RENT" ) 
+ {
+ update( model );
+ }
+ } else if (type !== "move" && type !== "metaChange") 
+ {
+ 
+ update( model );
+ }
+ },
+ progressView: $("#P11_TOTAL_AMOUNT") 
+ } );
+ update( model );
+ model.fetchAll(function() {});
+ }
+ });
+ });
+ })(apex.jQuery);
+
+Go to Booking Details Region :
+====================================
+Advanced: 
+ Static ID: nur ----type kore dite hobe
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,1 @@
+exp hm_ddd56/123@orcl19c file=D:\Project_DDD_DTCM_56_M\Databackup\19_02_24_11pm.dmp

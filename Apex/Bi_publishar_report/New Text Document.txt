@@ -1,0 +1,9 @@
+https://apex.oracle.com/pls/apex/f?p=&APP_ID.:0:&SESSION.:PRINT_REPORT=BI_Html_css_java_report
+
+
+
+https://apex.oracle.com/pls/apex/f?p=&APP_ID.:0:&SESSION.:PRINT_REPORT=Bi_Guest_Report
+
+
+
+https://apex.oracle.com/pls/apex/f?p=&APP_ID.:0:&SESSION.:PRINT_REPORT=BI_htm_css_employee_report

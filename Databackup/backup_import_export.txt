@@ -1,0 +1,30 @@
+
+
+SQL Devloper : 1st step
+================
+
+   SELECT 'ALTER TABLE '||table_name||' ALLOCATE EXTENT ;' 
+   FROM user_tables 
+   WHERE segment_created = 'NO' ;
+
+
+SQL PlUS:  2nd step
+====================
+   conn sys as sysdba
+
+   select name from v$database ;
+
+   drop user hm_ddd56 cascade ;
+
+   grant dba to hm_ddd56 identified by 123 ;
+
+
+Command : 3rd step
+===========================
+            >   imp
+ enter user >   hm_ddd56/123@dbddd56
+        
+        D:\Project_DDD_DTCM_56_M\Databackup\10_02_24_5.34am.dmp
+
+        Import entire export file (yes/no): no > y
+

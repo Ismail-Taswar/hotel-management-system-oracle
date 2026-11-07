@@ -1,0 +1,19 @@
+select   Distinct B.BOOKING_ID,B.BOOKING_M_ID,B.GUEST_ID,G.FIRST_NAME||' '||LAST_NAME Guest_name
+from     BOOKING_M B,GUEST G,CHECK_IN
+where    B.GUEST_ID = G.GUEST_ID
+and      CHECK_IN.BOOKING_M_ID = B.BOOKING_M_ID
+and      CHECK_IN.CHECK_IN_ID not in (select c.CHECK_IN_ID
+                              from    check_out c)
+order by B.BOOKING_ID desc
+
+
+
+
+
+:P53_BOOKING_M_ID,:P53_GUEST_NAME,:P53_GUEST_ID
+
+
+
+
+select nvl(max(BOOKING_ID), 0) + 1
+from BOOKING_M
