@@ -41,11 +41,17 @@ image/            UI assets (backgrounds, logos, employee photos)
 ## How to Run
 
 1. Create a schema in Oracle DB and run
-   `Documents/table_script_hotel_management_system.sql`
-   (plus the common script and `Room status Procedure.sql`).
-2. Open `.fmb` files in Oracle Forms Builder, connect to the schema, compile,
-   and run through the Forms runtime.
-3. Restore sample data with a dump from `Databackup/` (IMPDP).
+   `Documents/table_script_hotel_management_system.sql` (complete schema —
+   `table_script_commom.sql` is an older subset kept for reference),
+   then `Documents/Table_Script_Menu_Access_Control.sql` (access-control
+   tables for the menu/user-privilege forms) and
+   `Documents/Room status Procedure.sql`.
+   The scripts create the schema only — no data.
+2. Run `Documents/seed_default_user.sql` to create the first login user
+   (default `admin` / `admin`), then open the `.fmb` files in Oracle Forms
+   Builder, connect to the schema, compile, and run through the Forms runtime.
+3. Alternatively, restore the full database with a dump from `Databackup/`
+   (IMPDP) instead of steps 1–2 — dumps contain schema and real data.
 
 ## Author
 
