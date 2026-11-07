@@ -94240,7 +94240,7 @@ begin
     wwv_flow_imp.g_varchar2_table(152) := '\tqr\tx9360\wrapdefault\aspalpha\aspnum\faauto\adjustright\rin0\lin0\itap0\pararsid2168603 \rtlch\fc';
     wwv_flow_imp.g_varchar2_table(153) := 's1 \af0\afs22\alang1025 \ltrch\fcs0 '||wwv_flow.LF||
 '\f31506\fs22\lang1033\langfe1033\cgrid\langnp1033\langfenp1033';
-    wwv_flow_imp.g_varchar2_table(154) := ' {\rtlch\fcs1 \af0 \ltrch\fcs0 \fs16\insrsid2168603\charrsid2168603 Developed By: DDD-56@IsDB-BISEW}';
+    wwv_flow_imp.g_varchar2_table(154) := ' {\rtlch\fcs1 \af0 \ltrch\fcs0 \fs16\insrsid2168603\charrsid2168603 Developed By: Ismail Taswar}';
     wwv_flow_imp.g_varchar2_table(155) := '{\rtlch\fcs1 \af0 \ltrch\fcs0 \insrsid2168603 '||wwv_flow.LF||
 '                                                    ';
     wwv_flow_imp.g_varchar2_table(156) := '                               }{\rtlch\fcs1 \af0 \ltrch\fcs0 \fs20\insrsid2168603\charrsid856706   ';

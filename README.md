@@ -1,7 +1,7 @@
 # Hotel Management System (Oracle Forms & Reports)
 
-A hotel management system built as a university course project (team code:
-DDD-56). Manages guests, rooms, bookings, check-in/check-out, food and
+A hotel management system built as a university course project.
+Manages guests, rooms, bookings, check-in/check-out, food and
 services, billing, expenses, employees, and role-based users — with a large
 library of printable reports.
 
@@ -41,7 +41,7 @@ image/            UI assets (backgrounds, logos, employee photos)
 ## How to Run
 
 1. Create a schema in Oracle DB and run
-   `Documents/table_script_hotel_management_system_ddd_56.txt`
+   `Documents/table_script_hotel_management_system.txt`
    (plus the common script and `Room status Procedure.txt`).
 2. Open `.fmb` files in Oracle Forms Builder, connect to the schema, compile,
    and run through the Forms runtime.
